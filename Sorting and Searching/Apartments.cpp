@@ -18,33 +18,37 @@ int main(void){
 
     int n, m, k, t, ans=0;
     cin>>n>>m>>k;
-    multimap<int,int> applicants;
-    multimap<int,int> apartments;
-    // multimap<int,int>::iterator it;
-    multimap<int,int>::iterator iter1,iter2;
+    vector<int> apartments;
+    vector<int> applicants;
     for(int i=0;i<n;i++){
         cin>>t;
-        applicants.insert(make_pair(t,1));
+        applicants.push_back(t);
     }
     for(int i=0;i<m;i++){
         cin>>t;
-        apartments.insert(make_pair(t,1));
+        apartments.push_back(t);
     }
+    sort(applicants.begin(), applicants.end());
+    sort(apartments.begin(), apartments.end());
 
-    for(iter1=applicants.begin();iter1!=applicants.end();iter1++){
-        for(iter2=apartments.begin();iter2!=apartments.end();iter2++){
-            if(iter2->first >= iter1->first-k && iter2->first <= iter1->first+k ){
-                // cout<<iter2->first<<endl;
-                apartments.erase(iter2);
-                ans++;
-                break;
-            }
-
+    m--;
+    n--;
+    while(m>=0 && n>=0){
+        // cout<<"m n: "<<m<<' '<<n<<endl;
+        if(apartments[m]+k >= applicants[n] && apartments[m]-k <= applicants[n]){ //fit
+            ans++;
+            m--;
+            n--;
         }
+        else if(!(apartments[m]+k >= applicants[n]) && apartments[m]-k <= applicants[n]){ //house too small
+            n--;
+        }
+        else if(apartments[m]+k >= applicants[n] && !(apartments[m]-k <= applicants[n])){ //house too big
+            m--;
+        }
+        else cout<<"should not be print"<<endl;
     }
     cout<<ans<<endl;
-
-
 
 
 
