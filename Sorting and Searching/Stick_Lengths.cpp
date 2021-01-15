@@ -17,15 +17,20 @@ int main(void){
     ios::sync_with_stdio(false);
     cin.tie(NULL);
 
-    ll n,total=0;
+    ll n,t,mid,ans=0;
     cin>>n;
-    ll input[n];
-    for(int i=0;i<n;i++) cin>>input[i];
-    for(int i=0;i<n;i++) total+=input[i];
-    ll min_diff=total;
-    for(int i=0;i<n;i++){
-        ll t=n*input[i];
-        if(abs(total-t) < min_diff) min_diff=abs(total-t);
+    vector<ll> stick;
+    while(n--){
+        cin>>t;
+        stick.push_back(t);
     }
-    cout<<min_diff<<endl;
+    sort(stick.begin(),stick.end());
+    if(stick.size()%2==0) mid=(stick[stick.size()/2] + stick[stick.size()/2 -1]) /2;
+    else mid=stick[stick.size()/2];
+    // cout<<mid<<endl;
+    for(int i=0;i<stick.size();i++){
+        ans+=abs(stick[i]-mid);
+    }
+    cout<<ans<<endl;
+
 }
